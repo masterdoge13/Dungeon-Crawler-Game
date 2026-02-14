@@ -1,0 +1,105 @@
+[gd_scene load_steps=12 format=3 uid="uid://bd44hlwtmkxjr"]
+
+[ext_resource type="Script" uid="uid://cbwrxir6ygble" path="res://player.gd" id="1_nwwx5"]
+[ext_resource type="Texture2D" uid="uid://cd6npisjq7fu0" path="res://wizard mc sprite.png" id="2_rrygw"]
+[ext_resource type="Script" uid="uid://ccwovmqshn6i8" path="res://aim.gd" id="3_nqq8i"]
+[ext_resource type="Texture2D" uid="uid://joeg564c35mm" path="res://arrow.png" id="4_6xdiv"]
+[ext_resource type="PackedScene" uid="uid://ci5277rm6ig3o" path="res://pierce_up_button.tscn" id="5_53om2"]
+[ext_resource type="PackedScene" uid="uid://bakkwhk67r7qa" path="res://damage_up_button.tscn" id="6_g22vu"]
+[ext_resource type="PackedScene" uid="uid://d4lsv1tkvem4y" path="res://hpup.tscn" id="7_34h1v"]
+[ext_resource type="PackedScene" uid="uid://16grjcov5qi1" path="res://firerateup.tscn" id="8_ixr6r"]
+[ext_resource type="Script" uid="uid://8ilfwyxt65ys" path="res://ProgressBar.gd" id="9_s10rn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wa5f7"]
+radius = 77.8625
+height = 187.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3jcx"]
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 129
+collision_mask = 129
+script = ExtResource("1_nwwx5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, -2)
+scale = Vector2(0.436667, 0.448)
+shape = SubResource("CapsuleShape2D_wa5f7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-1, 22)
+scale = Vector2(1.28302, 1.40625)
+texture = ExtResource("2_rrygw")
+offset = Vector2(5.72514, -17.8571)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="aim" type="Node2D" parent="."]
+script = ExtResource("3_nqq8i")
+
+[node name="Sprite2D" type="Sprite2D" parent="aim"]
+position = Vector2(64, -1)
+rotation = 1.5708
+scale = Vector2(0.32, 0.3)
+texture = ExtResource("4_6xdiv")
+
+[node name="pierce up button" parent="." instance=ExtResource("5_53om2")]
+offset_left = -128.0
+offset_top = -97.0
+offset_right = -39.0
+offset_bottom = -47.0
+
+[node name="damage up button" parent="." instance=ExtResource("6_g22vu")]
+offset_left = -128.0
+offset_top = -37.0
+offset_right = -38.0
+offset_bottom = 13.0
+
+[node name="hp up button" parent="." instance=ExtResource("7_34h1v")]
+offset_left = 43.0
+offset_top = -37.0
+offset_right = 133.0
+offset_bottom = 13.0
+
+[node name="firerate up button" parent="." instance=ExtResource("8_ixr6r")]
+offset_left = 40.0
+offset_top = -99.0
+offset_right = 134.0
+offset_bottom = -49.0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(1, 0.00392157, 0, 1)
+offset_left = -33.0
+offset_top = -73.0
+offset_right = 37.0
+offset_bottom = -58.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_y3jcx")
+value = 60.0
+show_percentage = false
+script = ExtResource("9_s10rn")
+
+[connection signal="levelup" from="." to="pierce up button" method="_on_player_levelup"]
+[connection signal="levelup" from="." to="damage up button" method="_on_player_levelup"]
+[connection signal="levelup" from="." to="hp up button" method="_on_player_levelup"]
+[connection signal="levelup" from="." to="firerate up button" method="_on_player_levelup"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pierceup" from="pierce up button" to="." method="_on_pierce_up_button_pierceup"]
+[connection signal="pressed" from="pierce up button" to="damage up button" method="_on_pierce_up_button_pressed"]
+[connection signal="pressed" from="pierce up button" to="hp up button" method="_on_pierce_up_button_pressed"]
+[connection signal="pressed" from="pierce up button" to="firerate up button" method="_on_pierce_up_button_pressed"]
+[connection signal="damageup" from="damage up button" to="." method="_on_damage_up_button_damageup"]
+[connection signal="pressed" from="damage up button" to="pierce up button" method="_on_damage_up_button_pressed"]
+[connection signal="pressed" from="damage up button" to="hp up button" method="_on_damage_up_button_pressed"]
+[connection signal="pressed" from="damage up button" to="firerate up button" method="_on_damage_up_button_pressed"]
+[connection signal="hpup" from="hp up button" to="." method="_on_hp_up_button_hpup"]
+[connection signal="pressed" from="hp up button" to="pierce up button" method="_on_hp_up_button_pressed"]
+[connection signal="pressed" from="hp up button" to="damage up button" method="_on_hp_up_button_pressed"]
+[connection signal="pressed" from="hp up button" to="firerate up button" method="_on_hp_up_button_pressed"]
+[connection signal="firerateup" from="firerate up button" to="." method="_on_firerate_up_button_firerateup"]
+[connection signal="pressed" from="firerate up button" to="pierce up button" method="_on_firerate_up_button_pressed"]
+[connection signal="pressed" from="firerate up button" to="damage up button" method="_on_firerate_up_button_pressed"]
+[connection signal="pressed" from="firerate up button" to="hp up button" method="_on_firerate_up_button_pressed"]

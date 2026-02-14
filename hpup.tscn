@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4lsv1tkvem4y"]
+
+[ext_resource type="Script" uid="uid://cxjt3l02k5u8d" path="res://hpup.gd" id="1_47drt"]
+
+[node name="hp up button" type="Button"]
+process_mode = 3
+offset_right = 90.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(0.329412, 0.623529, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "HP +10"
+script = ExtResource("1_47drt")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

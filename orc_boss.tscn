@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://c2dpxevdjn6pf"]
+
+[ext_resource type="Script" uid="uid://co3aahjb5hbov" path="res://orc boss.gd" id="1_shsti"]
+[ext_resource type="Texture2D" uid="uid://b8puild68d3mc" path="res://goblin rider boss sprite.png" id="2_8ldj6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2lj14"]
+radius = 63.0
+height = 152.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v81c2"]
+radius = 85.0
+height = 170.0
+
+[node name="orc boss" type="CharacterBody2D"]
+position = Vector2(1, 0)
+disable_mode = 2
+script = ExtResource("1_shsti")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.00828, 7.34786)
+scale = Vector2(2.33779, 2.3564)
+texture = ExtResource("2_8ldj6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 16)
+shape = SubResource("CapsuleShape2D_2lj14")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-4, 15)
+shape = SubResource("CapsuleShape2D_v81c2")
+
+[node name="ability timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="ability length" type="Timer" parent="."]
+one_shot = true
+
+[node name="ability charge" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="ability timer" to="." method="_on_ability_timer_timeout"]
+[connection signal="timeout" from="ability length" to="." method="_on_ability_length_timeout"]
+[connection signal="timeout" from="ability charge" to="." method="_on_ability_charge_timeout"]

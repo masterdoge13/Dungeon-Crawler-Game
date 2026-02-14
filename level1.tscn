@@ -1,0 +1,102 @@
+[gd_scene load_steps=10 format=3 uid="uid://vu7v7jv4afdr"]
+
+[ext_resource type="Script" uid="uid://dhda83sd267bv" path="res://level1.gd" id="1_7q6gk"]
+[ext_resource type="PackedScene" uid="uid://bd44hlwtmkxjr" path="res://player.tscn" id="1_l3di6"]
+[ext_resource type="Texture2D" uid="uid://bdfmcm5kmhn60" path="res://background.png" id="2_ms47g"]
+[ext_resource type="PackedScene" uid="uid://cwg1cutbpjuo8" path="res://meleegoblinenemy.tscn" id="2_uv15j"]
+[ext_resource type="PackedScene" uid="uid://dbvk0n51vnji2" path="res://box.tscn" id="5_dl73x"]
+[ext_resource type="AudioStream" uid="uid://ct6x5ld4fa4nc" path="res://capstone game normal bg music.wav" id="6_a20jr"]
+[ext_resource type="AudioStream" uid="uid://b1epelghgneag" path="res://capstone boss.wav" id="7_06xrk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_557x4"]
+size = Vector2(17, 7035)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ehigc"]
+size = Vector2(11110, 20)
+
+[node name="level" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_7q6gk")
+
+[node name="pausable" type="Node2D" parent="."]
+process_mode = 1
+
+[node name="background" type="Node2D" parent="pausable"]
+position = Vector2(4004, 2034)
+
+[node name="Sprite2D" type="Sprite2D" parent="pausable/background"]
+texture_repeat = 2
+position = Vector2(1489, 1451)
+scale = Vector2(1, 1.01028)
+texture = ExtResource("2_ms47g")
+region_enabled = true
+region_rect = Rect2(0, 0, 11162.1, 7004.29)
+
+[node name="Player" parent="pausable" instance=ExtResource("1_l3di6")]
+position = Vector2(6065, 2977)
+collision_layer = 130
+collision_mask = 130
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="pausable/Player"]
+limit_left = 0
+limit_top = 0
+limit_right = 11000
+limit_bottom = 7000
+
+[node name="Projectiles" type="Node2D" parent="pausable"]
+
+[node name="Enemies" type="Node2D" parent="pausable"]
+
+[node name="meleegoblin" parent="pausable/Enemies" instance=ExtResource("2_uv15j")]
+position = Vector2(718, 489)
+
+[node name="spawn timer" type="Timer" parent="pausable"]
+wait_time = 5.0
+autostart = true
+
+[node name="box" parent="pausable" instance=ExtResource("5_dl73x")]
+position = Vector2(674, 318)
+
+[node name="boss spawn timer" type="Timer" parent="pausable"]
+wait_time = 120.0
+autostart = true
+
+[node name="when paused" type="Node2D" parent="."]
+process_mode = 2
+
+[node name="border" type="StaticBody2D" parent="."]
+position = Vector2(-20, 10)
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="border"]
+position = Vector2(-1.5, 3507.5)
+shape = SubResource("RectangleShape2D_557x4")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="border"]
+position = Vector2(11000, 3507)
+shape = SubResource("RectangleShape2D_557x4")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="border"]
+position = Vector2(5545, 0)
+shape = SubResource("RectangleShape2D_ehigc")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="border"]
+position = Vector2(5455, 7005)
+shape = SubResource("RectangleShape2D_ehigc")
+
+[node name="bg music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_a20jr")
+volume_db = -10.0
+autoplay = true
+
+[node name="boss music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_06xrk")
+volume_db = -10.0
+
+[connection signal="bullet_fired" from="pausable/Player" to="." method="_on_player_bullet_fired"]
+[connection signal="gameover" from="pausable/Player" to="." method="_on_player_gameover"]
+[connection signal="levelup" from="pausable/Player" to="." method="_on_player_levelup"]
+[connection signal="timeout" from="pausable/spawn timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="pausable/boss spawn timer" to="." method="_on_boss_spawn_timer_timeout"]

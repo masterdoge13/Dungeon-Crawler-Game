@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci5277rm6ig3o"]
+
+[ext_resource type="Script" uid="uid://brr61mx1upihj" path="res://pierceup.gd" id="1_ioki0"]
+
+[node name="pierce up button" type="Button"]
+process_mode = 3
+offset_right = 89.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(0, 0.623529, 0.537255, 1)
+theme_override_font_sizes/font_size = 15
+text = "Pierce +1"
+script = ExtResource("1_ioki0")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://bakkwhk67r7qa"]
+
+[ext_resource type="Script" uid="uid://oo8ltgww40dy" path="res://damageup.gd" id="1_lesaw"]
+
+[node name="damage up button" type="Button"]
+process_mode = 3
+offset_right = 90.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "Damage +1"
+script = ExtResource("1_lesaw")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

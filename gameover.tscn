@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb6pj0bxcsi6t"]
+
+[ext_resource type="Script" uid="uid://bndr5t3l0tyxv" path="res://button.gd" id="1_4nh4k"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(0.9067484, 0.5048691, 1.540184e-06, 1)
+custom_minimum_size = Vector2(500, 200)
+offset_right = 500.0
+offset_bottom = 200.0
+text = "Play Again"
+script = ExtResource("1_4nh4k")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(250, 100)
+
+[connection signal="pressed" from="Button" to="Button" method="_on_pressed"]
